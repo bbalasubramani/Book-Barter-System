@@ -17,6 +17,10 @@ Book Barter is a web application that allows users to search, share, and exchang
 
 ## 📦 Installation
 ```bash
+npm install node
+npm install mongoose
+npm create vite@latest Book-Barter-app
+cd Book-Barter-app
 npm install
 npm run dev
 ```
