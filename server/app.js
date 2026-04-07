@@ -11,14 +11,30 @@ const userRoutes = require('./routes/userRoutes');
 dotenv.config();
 
 const app = express();
+const normalizeOrigin = (origin) => origin.replace(/\/$/, '');
+
 const allowedOrigins = (process.env.FRONTEND_URL || '')
   .split(',')
   .map((origin) => origin.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .map(normalizeOrigin);
 
-app.use(cors({
-  origin: allowedOrigins.length ? allowedOrigins : true,
-}));
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || !allowedOrigins.length) {
+      return callback(null, true);
+    }
+
+    const normalizedOrigin = normalizeOrigin(origin);
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
