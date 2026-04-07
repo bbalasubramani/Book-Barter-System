@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from './config';
 
 const AddBook = () => {
   const [search, setSearch] = useState('');
@@ -17,7 +18,7 @@ const AddBook = () => {
 
   const handleAddBook = async (book) => {
     try {
-      await axios.post('http://localhost:3030/api/books/add', {
+      await axios.post(`${API_BASE_URL}/api/books/add`, {
         title: book.title,
         author: book.author_name ? book.author_name.join(', ') : 'Unknown',
         genre: book.subject ? book.subject[0] : 'General',
