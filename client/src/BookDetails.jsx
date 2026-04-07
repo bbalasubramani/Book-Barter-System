@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './App.css';
+import { API_BASE_URL } from './config';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const BookDetails = () => {
   const [showEmail, setShowEmail] = useState(false); // state for toggling owner's email
 
   useEffect(() => {
-    fetch(`http://localhost:3030/api/books/${id}`, {
+    fetch(`${API_BASE_URL}/api/books/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
