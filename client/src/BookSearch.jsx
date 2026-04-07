@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from './config';
 
 const BookSearch = () => {
   const [query, setQuery] = useState('');
@@ -14,7 +15,7 @@ const BookSearch = () => {
   }
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:3030/api/books/', {
+      const response = await axios.get(`${API_BASE_URL}/api/books/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBooks(response.data);
