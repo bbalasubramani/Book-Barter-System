@@ -11,7 +11,14 @@ const userRoutes = require('./routes/userRoutes');
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: allowedOrigins.length ? allowedOrigins : true,
+}));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
