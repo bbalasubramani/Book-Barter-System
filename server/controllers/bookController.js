@@ -30,6 +30,9 @@ exports.getMyBooks = async (req, res) => {
 };
 
 exports.getBookById = async (req, res) => {
-  const book = await Book.findById(req.params.id).populate('owner', 'name');
+  const book = await Book.findById(req.params.id).populate('owner', 'name email');
+  if (!book) {
+    return res.status(404).json({ message: 'Book not found' });
+  }
   res.json(book);
 };
