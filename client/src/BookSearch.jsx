@@ -18,8 +18,11 @@ const BookSearch = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/books`, {
+      const response = await axios.get(`${API_BASE_URL}/api/books/mine`, {
         params: { _t: Date.now() },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
       const booksPayload = Array.isArray(response.data)
         ? response.data
