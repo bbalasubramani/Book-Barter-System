@@ -20,6 +20,7 @@ function Login() {
 
       localStorage.setItem('token', token);
       localStorage.setItem('email', email);
+      localStorage.setItem('userEmail', email);
 
       alert('Login successful');
       navigate('/');
