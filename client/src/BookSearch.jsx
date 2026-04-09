@@ -18,7 +18,9 @@ const BookSearch = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/books`);
+      const response = await axios.get(`${API_BASE_URL}/api/books`, {
+        params: { _t: Date.now() },
+      });
       const booksPayload = Array.isArray(response.data)
         ? response.data
         : response.data?.books;
