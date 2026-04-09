@@ -1,11 +1,17 @@
 const Trade = require('../models/Trade');
+const Book = require('../models/Book');
 
 exports.requestTrade = async (req, res) => {
   const { bookRequested, bookOffered } = req.body;
   try {
+    const requestedBook = await Book.findById(bookRequested).select('owner');
+    if (!requestedBook) {
+      return res.status(404).json({ message: 'Requested book not found' });
+    }
+    
     const trade = new Trade({
       requester: req.user.id,
-      owner: (await Book.findById(bookRequested)).owner,
+      owner: requestedBook.owner,
       bookRequested,
       bookOffered
     });
