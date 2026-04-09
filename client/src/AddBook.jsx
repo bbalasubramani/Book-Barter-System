@@ -17,16 +17,24 @@ const AddBook = () => {
   };
 
   const handleAddBook = async (book) => {
+    const firstSentence = Array.isArray(book.first_sentence)
+      ? book.first_sentence[0]
+      : book.first_sentence;
+
+    const imageUrl = book.cover_i
+      ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+      : '';
+
     try {
       await axios.post(`${API_BASE_URL}/api/books/add`, {
         title: book.title,
         author: book.author_name ? book.author_name.join(', ') : 'Unknown',
         genre: book.subject ? book.subject[0] : 'General',
         condition: 'Good',
-        description: book.first_sentence ? book.first_sentence[0] : 'No description available',
+        description: firstSentence || 'No description available',
         pageCount: book.number_of_pages_median || 100,
-        imageUrl: `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`,
-        email: localStorage.getItem('userEmail') || 'No email available',
+        imageUrl,
+        email: localStorage.getItem('email') || localStorage.getItem('userEmail') || 'No email available',
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
