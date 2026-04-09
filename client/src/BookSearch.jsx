@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from './config';
@@ -13,7 +13,7 @@ const BookSearch = () => {
     localStorage.removeItem('email');
     navigate('/login');
   }
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/books/`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -22,16 +22,18 @@ const BookSearch = () => {
     } catch (error) {
       console.error('Error fetching books:', error);
     }
-  };
+ }, [token]);
 
   useEffect(() => {
     fetchBooks();
-  }, []);
+  }, [fetchBooks]);
 
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(query.toLowerCase()) ||
-    (book.author && book.author.toLowerCase().includes(query.toLowerCase()))
-  );
+ const normalizedQuery = query.toLowerCase();
+  const filteredBooks = books.filter((book) => {
+    const title = (book.title || '').toLowerCase();
+    const author = (book.author || '').toLowerCase();
+    return title.includes(normalizedQuery) || author.includes(normalizedQuery);
+  });
 
   return (
     <div className="container">
