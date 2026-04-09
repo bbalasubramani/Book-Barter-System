@@ -6,7 +6,8 @@ import { API_BASE_URL } from './config';
 const BookSearch = () => {
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState([]);
-  const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const logout=()=>{
     localStorage.removeItem('token');
@@ -14,15 +15,21 @@ const BookSearch = () => {
     navigate('/login');
   }
   const fetchBooks = useCallback(async () => {
+    setLoading(true);
+    setError('');
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/books/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setBooks(response.data);
+      const response = await axios.get(`${API_BASE_URL}/api/books`);
+      const booksPayload = Array.isArray(response.data)
+        ? response.data
+        : response.data?.books;
+      setBooks(Array.isArray(booksPayload) ? booksPayload : []);
     } catch (error) {
       console.error('Error fetching books:', error);
+      setError('Unable to load books right now. Please try again.');
+    } finally {
+      setLoading(false);
     }
- }, [token]);
+ }, []);
 
   useEffect(() => {
     fetchBooks();
@@ -50,6 +57,11 @@ const BookSearch = () => {
       </div>
 
       <div className="card-grid">
+        {loading && <p>Loading books...</p>}
+        {!loading && error && <p>{error}</p>}
+        {!loading && !error && filteredBooks.length === 0 && (
+          <p>No books found.</p>
+        )}
         {filteredBooks.map((book, index) => {
           const coverImage = book.imageUrl
             ? book.imageUrl
