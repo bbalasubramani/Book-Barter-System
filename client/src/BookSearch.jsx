@@ -18,10 +18,9 @@ const BookSearch = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/books/mine`, {
-        params: { _t: Date.now() },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+      const response = await axios.get(`${API_BASE_URL}/api/books`, {
+        params: {
+          _t: Date.now(),
         },
       });
       const booksPayload = Array.isArray(response.data)
@@ -49,7 +48,7 @@ const BookSearch = () => {
 
   return (
     <div className="container">
-      <h2>📚 My Book List</h2>
+      <h2>📚 Book List</h2>
       <div className="search-bar">
         <input
           type="text"
@@ -67,7 +66,7 @@ const BookSearch = () => {
         {!loading && !error && filteredBooks.length === 0 && (
           <p>No books found.</p>
         )}
-        {filteredBooks.map((book, index) => {
+       {filteredBooks.map((book) => {
           const coverImage = book.imageUrl
             ? book.imageUrl
             : `https://via.placeholder.com/128x180?text=No+Image`;
@@ -75,7 +74,7 @@ const BookSearch = () => {
           return (
             <Link
               to={`/book/${book._id}`}
-              key={index}
+             key={book._id}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <div className="card">
