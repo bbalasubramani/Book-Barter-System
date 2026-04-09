@@ -14,14 +14,19 @@ const BookDetails = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-      .then(res => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Failed to load book details');
+        }
+        return res.json();
+      })
       .then(data => setBook(data))
       .catch(err => console.error('Error:', err));
   }, [id]);
 
   if (!book) return <p style={{ color: 'white' }}>Loading...</p>;
 
-  const ownerEmail = book.owner?.email || 'Email not available';
+  const ownerEmail = book.owner?.email || book.email || 'Email not available';
 
   return (
     <div className="book-details-container">
