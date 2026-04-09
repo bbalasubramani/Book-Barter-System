@@ -12,6 +12,7 @@ const BookSearch = () => {
   const logout=()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    localStorage.removeItem('userEmail');
     navigate('/login');
   }
   const fetchBooks = useCallback(async () => {
