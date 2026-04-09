@@ -18,7 +18,8 @@ exports.getBooks = async (req, res) => {
   const { query } = req.query;
   const books = await Book.find({
     title: { $regex: query || '', $options: 'i' },
-    available: true
+    // Treat legacy records with a missing `available` field as available.
+    available: { $ne: false }
   }).populate('owner', 'name');
   res.json(books);
 };
