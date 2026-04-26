@@ -77,7 +77,7 @@ flowchart LR
 
 ![Login Screen](docs/screenshots/login.png)
 ![Book Listing](docs/screenshots/book-list.png)
-![Trade Request](docs/screenshots/trade-request.png)
+![Trade Request](docs/screenshots/Trade.png)
 
 ---
 
