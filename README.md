@@ -7,7 +7,7 @@ Book Barter is a web application that allows users to search, share, and exchang
 - View book details with cover images
 - Responsive card-based layout
 - API integration with Open Library
-
+- Health check endpoint at `GET /health` for uptime monitors (for example Better Stack)
 
 ## 🛠️ Tech Stack
 - React
