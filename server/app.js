@@ -37,17 +37,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get('/health', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     status: 'ok',
-    service: 'book-barter-server',
-    timestamp: new Date().toISOString(),
-    uptimeSeconds: Math.floor(process.uptime()),
+    message: 'Book Barter API is running',
+    healthCheck: '/health',
   });
 });
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'));
+  .then(() => console.log('MongoDB connected'))
+  .catch((error) => {
+    console.error('MongoDB connection failed:', error.message);
+  });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
