@@ -37,6 +37,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'book-barter-server',
+    timestamp: new Date().toISOString(),
+    uptimeSeconds: Math.floor(process.uptime()),
+  });
+});
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'));
 
