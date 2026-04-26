@@ -75,19 +75,9 @@ flowchart LR
 
 ## 🖼️ Screenshots
 
-> Replace these placeholders with actual screenshots from your deployed app.
-
-- `docs/screenshots/login.png` — Login / Signup screen
-- `docs/screenshots/book-list.png` — Book listing / search page
-- `docs/screenshots/trade-request.png` — Trade request / response flow
-
-Example markdown:
-
-```md
 ![Login Screen](docs/screenshots/login.png)
 ![Book Listing](docs/screenshots/book-list.png)
 ![Trade Request](docs/screenshots/trade-request.png)
-```
 
 ---
 
