@@ -203,8 +203,8 @@ This demonstrates real-world **cloud deployment** for a **full stack developer**
 
 ## 🤝 Connect / Contact
 
-- **GitHub:** https://github.com/<your-github-username>
-- **LinkedIn:** https://www.linkedin.com/in/<your-linkedin-username>
+- **GitHub:** https://github.com/bbalasubramani/
+- **LinkedIn:** https://www.linkedin.com/in/balasubramani-dev/
 
 ---
 
