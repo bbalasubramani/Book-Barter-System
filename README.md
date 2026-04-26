@@ -52,9 +52,9 @@ Books can be expensive for students and everyday readers, especially when titles
 
 ```mermaid
 flowchart LR
-    U[User Browser] --> F[React Frontend (Netlify)]
-    F --> A[Express REST API (Render)]
-    A --> D[(MongoDB Atlas)]
+    U["User Browser"] --> F["React Frontend (Netlify)"]
+    F --> A["Express REST API (Render)"]
+    A --> D[("MongoDB Atlas")]
 ```
 
 ---
