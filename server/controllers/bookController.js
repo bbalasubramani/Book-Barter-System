@@ -1,14 +1,30 @@
 const Book = require('../models/Book');
 
 exports.addBook = async (req, res) => {
-  const { title, author, genre, condition, description, pageCount, imageUrl,email } = req.body;
+  const { title, author, genre, condition, description, pageCount, imageUrl, email } = req.body;
   try {
+    if (!title || !author) {
+      return res.status(400).json({ message: 'Title and author are required' });
+    }
+
+    const normalizedPageCount = Number(pageCount);
+    if (!Number.isFinite(normalizedPageCount) || normalizedPageCount <= 0) {
+      return res.status(400).json({ message: 'Page count must be a positive number' });
+    }
+    
     const book = new Book({
-      title, author, genre, condition, description, pageCount, imageUrl,email,
+      title: title.trim(),
+      author: author.trim(),
+      genre,
+      condition,
+      description,
+      pageCount: normalizedPageCount,
+      imageUrl,
+      email,
       owner: req.user.id
     });
     await book.save();
-    res.status(201).json(book);
+    return res.status(201).json(book);
   } catch {
     res.status(400).json({ message: 'Error adding book' });
   }
